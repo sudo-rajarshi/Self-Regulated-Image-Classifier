@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <title>Processing</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="jumbotron text-left">
+            <div>
+                <h1 class="font-weight-bold">Summary</h1>
+                <h5><b>User ID: </b> {{data[27]}}</h5>
+                <p>
+                    <i>A zip file consisting the model and all other required infromations will be sent from <b>{{ data[26] }}</b> to your Email-ID i.e. <b>{{ data[25] }}</b>.</i>
+                    <br>
+                    <i>It may take few minutes depending upon your model's size</i>
+                </p>
+                <!-- <a href= -->
+                <!-- <a href="/mnt/5cb8cb09-4047-4516-9429-8cb5922bb3d2/PROJECTS/PRODUCTS/SRIC/sample/Results/Model.zip" class="btn btn-primary mt-2" download>Download Model</a> -->
+                <!-- <a href="{{ url_for('static', filename = 'model.zip')}}" class="btn btn-primary mt-2" download>Download Model</a> -->
+            </div>
+            <hr>
+            <h3><b>Data Source</b></h3>
+            <p class='lead'>                 
+                <b>Google Drive Link of the dataset: </b><a href="{{data[0]}}" target="_blank">{{data[0]}}</a><br>
+                Total number of image samples in the dataset: {{data[1]}}
+            </p>
+            <h3><b>Data Splitting</b></h3>
+            <p class='lead'>    
+                {{data[2]}}% data is used for training;<br>               
+                {{data[4]}}% data is used for validation;<br>               
+                {{data[6]}}% data is used for testing.
+            </p>
+            <h3><b>Data Pre-processings</b></h3>
+            <p class='lead'>    
+                The images in the dataset have been rescaled to {{data[8]}}x{{data[9]}} pixels.                     
+            </p>
+            <h3><b>Hyper-parameters</b></h3>
+            <p class='lead'>                 
+                Learning Rate: {{data[10]}};<br>           
+                Maximum number of Epochs: {{data[11]}};<br>                       
+                Batch Size: {{data[12]}}.        
+            </p>
+            <h3><b>Overfitting Optimization</b></h3>
+            <p class='lead'>                 
+                {%if data[13] == 'y' %}
+                {{data[14]}} with no improvement has been monitored for {{data[15]}} epochs.<br>
+                Training stopped after monitoring {{data[14]}} for total {{data[16]}} epochs.<br>
+                Model is saved where {{data[14]}} is properly optimized.<br>
+
+                {%elif data[13] == 'n' %}
+                Model is saved where {{data[14]}} is properly optimized.<br>
+
+                {%endif%}
+            </p>
+            <h3><b>Classification Results</b></h3>
+            <p class='lead'>
+                Training Accuracy: {{data[17]}}%<br>
+                Validation Accuracy: {{data[18]}}%<br>
+                Testing Accuracy: {{data[19]}}%<br>
+                Testing Precision: {{data[20]}}%<br>
+                Testing Recall: {{data[21]}}%<br>
+                Sensitivity: {{data[22]}}%<br>
+                Specificity: {{data[23]}}%<br><br>
+                Time taken for training: {{data[24]}} seconds          
+            </p>
+        </div>
+    </div>
+    <center>
+        <a href="/" class='btn btn-primary'>Make another submission</a>
+    </center>
+    <br>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+             $('#printBtn').click(function(){
+                Popup($('.jumbotron')[0].outerHTML);
+                function Popup(data) {
+                    window.print();
+                    return true;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

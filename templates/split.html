@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <title>Split</title>
+</head>
+
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card">
+                    <div class="card-body"> 
+                        <h4 class="text-center display-4">SRIC</h4>
+                        <div class="text-center">
+                            <b>User ID: </b> {{data[2]}}
+                        </div>
+                        <hr>
+                        <h3 class="text-primary mt-4">Split the Data</h3>
+                        <hr>
+                        <b>Number of image samples: </b>{{data[0]}}<br>
+                        <b>Number of classes: </b>{{data[1]}}<br>
+                        <br>
+                        <form action="{{url_for('split')}}" enctype="multipart/form-data" method="post">
+                            <div class="form-group">
+                                <label for="val_size">Using how much data(%) you want to validate?</label>
+                                <input type="text" class="form-control" name="val_size" placeholder="Default: 15">
+                            </div>
+                            <div class="form-group">
+                                <label for="test_size">Using how much data(%) you want to test?</label>
+                                <input type="text" class="form-control" name="test_size" placeholder="Default: 10">
+                            </div>
+                            <div class="form-group" id="submitBtn">
+                                <input type="submit" id="submitBtn" name="submit" class="btn btn-danger btn-block rounded-pill">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+
+    <p id="msg" class="text-center"></p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#submitBtn").click(function() {
+                $("#submitBtn").hide();
+                document.getElementById("msg").innerHTML = 'Splitting for Training, Validation & Testing....'
+
+            });
+        });
+    </script>
+
+</body>
+
+</html>

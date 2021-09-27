@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <title>SRIC</title>
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card">
+                    <div class="card-body"> 
+                        <h4 class="text-center display-4">SRIC</h4>
+                        <hr>
+                        <form action="{{url_for('summary')}}" enctype="multipart/form-data" method="post">
+                            <div class="form-group">
+                                <label for="glink">Folder Link</label>
+                                <input type="text" class="form-control" name="glink" placeholder="Enter Google Drive Link" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="toaddr">Enter your Email-ID</label>
+                                <input type="text" class="form-control" name="toaddr" placeholder="Example: name@something.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="name_res_dir">Enter name of Results folder</label>
+                                <input type="text" class="form-control" name="name_res_dir" placeholder="Default: Results">
+                            </div>
+
+
+                            <h3 class="text-primary mt-4">Split the Data</h3>
+                            <hr>
+                            <div class="form-group">
+                                <label for="val_size">Using how much data(%) you want to validate?</label>
+                                <input type="text" class="form-control" name="val_size" placeholder="Default: 15">
+                            </div>
+                            <div class="form-group">
+                                <label for="test_size">Using how much data(%) you want to test?</label>
+                                <input type="text" class="form-control" name="test_size" placeholder="Default: 10">
+                            </div>
+
+
+                            <h3 class="text-primary mt-4">Preprocess the Splitted Data</h3>
+                            <hr>
+                            <div class="form-group">
+                                <label for="img_h">Enter required height of image</label>
+                                <input type="text" class="form-control" name="img_h" placeholder="Default: 64">
+                                <small id="img_h" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="img_w">Enter required width of image</label>
+                                <input type="text" class="form-control" name="img_w" placeholder="Default: 64">
+                            </div>
+
+
+                            <h3 class="text-primary mt-4">Hyper-parameter Tuning</h3>
+                            <hr>
+                            <div class="form-group">
+                                <label for="learning_rate">Enter initial learing rate</label>
+                                <input type="text" class="form-control" name="learning_rate" placeholder="Default: 0.001">
+                            </div>
+                            <div class="form-group">
+                                <label for="epoch">Enter maximum number of epochs</label>
+                                <input type="text" class="form-control" name="epoch" placeholder="Default: 25">
+                            </div>
+                            <div class="form-group">
+                                <label for="batch_size">Enter batch size</label>
+                                <input type="text" class="form-control" name="batch_size" placeholder="Default: 8">
+                            </div>
+
+
+                            <h3 class="text-primary mt-4">Early Stopping</h3>
+                            <hr>
+                            <!-- if 'y' then  -->
+                            <div class="form-group">
+                                <label for="early_stop">Do you want to early stop the training?</label>
+                                <select class="custom-select" id="early_stop" name="early_stop" aria-label="Example select with button addon">
+                                    <!-- <option selected>Choose...</option> -->
+                                    <option value="n">No</option>
+                                    <option value="y">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="monitor">Which quantity you want to monitor?</label>
+                                <select class="custom-select" name="monitor" aria-label="Example select with button addon">
+                                    <!-- <option selected>Choose...</option> -->
+                                    <option value="Validation Acccuracy">Validation Acccuracy</option>
+                                    <option value="Validation Loss">Validation Loss</option>
+                                    <option value="Training Accuracy">Training Accuracy</option>
+                                    <option value="Training Loss">Training Loss</option>
+                                </select>
+                            </div>
+                            <!-- this will be shown -->
+                            <div class="form-group" id="patience" style="display: none;">
+                                <label for="patience">For how many epochs you want to monitor?</label>
+                                <input type="text" class="form-control" name="patience" placeholder="Default: 5">
+                            </div>
+
+                            
+                            <h3 class="text-primary mt-4">Choose Model</h3>
+                            <hr>
+                            <div class="form-group">
+                                <label for="tl_models">Using which model you want to train?</label>
+                                <select class="custom-select" id="tl_models" name="tl_models" aria-label="Example select with button addon">
+                                    <!-- <option>Choose</option> -->
+                                    <option value="Basic">Basic Model</option>
+                                    <option value="VGG16">VGG16</option>
+                                    <option value="VGG19">VGG19</option>
+                                    <option value="MobileNet">MobileNet</option>
+                                    <option value="Inception">Inception V3</option>
+                                    <option value="ResNet50">ResNet50</option>
+                                    <option value="Own">Create own model</option>
+                                </select>
+                            </div>
+
+
+                            <!-- For Options 1-5 -->
+                            <div class="form-group" id="dlayer" style="display: none;">
+                                <label for="dense">Number of Neurons in Dense Layer</label>
+                                <input type="text" class="form-control" name="dense" placeholder="Default: 256">
+                            </div>
+                            <div class="form-group" id="drate" style="display: none;">
+                                <label for="dropout">Dropout Rate(%)</label>
+                                <input type="text" class="form-control" name="dropout" placeholder="Default: 30">
+                            </div>
+                            <div class="form-group" id="tbmodel" style="display: none;">
+                                <label for="train_base_model">Do you want to extract fetures?</label>
+                                <select class="custom-select" name="train_base_model" aria-label="Example select with button addon">
+                                    <!-- <option selected>Choose...</option> -->
+                                    <option value="n">No</option>
+                                    <option value="y">Yes</option>
+                                </select>
+                            </div>
+
+
+                            <!-- For Option 7 -->
+                            <div class="form-group" id="nlayer" style="display: none;">
+                                <label for="layer">Number of Layers</label>
+                                <input type="text" class="form-control" name="layer" placeholder="Default: 5">
+                            </div>
+                            <div class="form-group" id="clayer" style="display: none;">
+                                <label for="conv_layer">Number of Convolution Layers</label>
+                                <input type="text" class="form-control" name="conv_layer" placeholder="Default: 1">
+                            </div>
+                            <div class="form-group" id="numfilter" style="display: none;">
+                                <label for="conv">Number of Filters in 1st Convolution Layer</label>
+                                <input type="text" class="form-control" name="conv" placeholder="Default: 16">
+                            </div>
+                            <div class="form-group" id="sizefilter" style="display: none;">
+                                <label for="conv_size">Size of Filters</label>
+                                <input type="text" class="form-control" name="conv_size" placeholder="Default: 3">
+                            </div>
+                            
+
+                            <div class="form-group">
+                                <label for="Optimizer">Choose Optimizer</label>
+                                <select class="custom-select" name="optimizer" aria-label="Example select with button addon">
+                                    <!-- <option selected>Choose...</option> -->
+                                    <option value="Adam">Adam</option>
+                                    <option value="SGD">Stochastic Gradient Descent</option>
+                                    <option value="RMSprop">RMSprop</option>
+                                    <option value="Adagrad">Adagrad</option>
+                                    <option value="Adadelta">Adadelta</option>
+                                    <option value="Adamax">Adamax</option>
+                                    <option value="Nadam">Nadam</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" id="submitBtn" name="submit" class="btn btn-danger btn-block rounded-pill">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#tl_models").on('change', function(){
+                if (this.value == "Basic") {
+                    $("#dlayer").hide();
+                    $("#drate").hide();
+                    $("#tbmodel").hide();
+                    $("#nlayer").hide();
+                    $("#clayer").hide();
+                    $("#numfilter").hide();
+                    $("#sizefilter").hide();
+                }
+                if (this.value == "VGG16" || this.value == "VGG19" || this.value == "MobileNet"  || this.value == "Inception" || this.value == "ResNet50" ) {
+                    $("#dlayer").show();
+                    $("#drate").show();
+                    $("#tbmodel").show();
+                    $("#nlayer").hide();
+                    $("#clayer").hide();
+                    $("#numfilter").hide();
+                    $("#sizefilter").hide();
+                }
+                else if (this.value == "Own") {
+                    $("#dlayer").show();
+                    $("#drate").show();
+                    $("#nlayer").show();
+                    $("#clayer").show();
+                    $("#numfilter").show();
+                    $("#sizefilter").show();
+                }
+            });
+            $("#early_stop").on('change', function(){
+                if (this.value == "y") {
+                    $("#patience").show();
+                }
+                else if (this.value == "n") {
+                    $("#patience").hide();
+                }
+            });
+
+            $("#submitBtn").click(function() {
+                $(this).val('Processing....');
+                // $(this).attr('disabled', true);
+            });
+        });
+    </script>
+</body>
+</html>

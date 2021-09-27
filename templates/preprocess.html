@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <title>Preprocess</title>
+</head>
+
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card">
+                    <div class="card-body"> 
+                        <h4 class="text-center display-4">SRIC</h4>
+                        <div class="text-center">
+                            <b>User ID: </b> {{data[4]}}
+                        </div>
+                        <hr>
+                        <h3 class="text-primary mt-4">Preprocess the Splitted Data</h3>
+                        <hr>
+                        <b>Smallest Height: </b>{{data[0]}} pixels<br>
+                        <b>Smallest Width: </b>{{data[1]}} pixels<br>
+                        <br>
+                        <b>Average Height: </b>{{data[2]}} pixels<br>
+                        <b>Average Width: </b>{{data[3]}} pixels<br>
+                        <br>
+                        <form action="{{url_for('preprocess')}}" enctype="multipart/form-data" method="post">
+                            <div class="form-group">
+                                <label for="img_h">Enter required height of image</label>
+                                <input type="text" class="form-control" name="img_h" placeholder="Default: 128">
+                            </div>
+                            <div class="form-group">
+                                <label for="img_w">Enter required width of image</label>
+                                <input type="text" class="form-control" name="img_w" placeholder="Default: 128">
+                            </div>
+                            <div class="form-group" id="submitBtn">
+                                <input type="submit" id="submitBtn" name="submit" class="btn btn-danger btn-block rounded-pill">
+                            </div>
+                        </form>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+
+    <p id="msg" class="text-center"></p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#submitBtn").click(function() {
+                $("#submitBtn").hide();
+                document.getElementById("msg").innerHTML = 'Pre-processing....'
+
+            });
+        });
+    </script>
+
+</body>
+
+</html>
