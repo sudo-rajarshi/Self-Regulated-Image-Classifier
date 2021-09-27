@@ -5,6 +5,10 @@
 * The system is packed with all essential features for parameters \& hyper-parameters tunning and also incorporates transfer learning functionality.
 * Technology used: Python3, Tensorflow, Keras, Open-CV, Flask
 
+## Demo:
+![Alt Text](video/SRIC.gif)
+
+
 ## Run in own machine:
 * `git clone https://github.com/AI-Testament/SRIC-web.git` 
 * `cd SRIC-web`
