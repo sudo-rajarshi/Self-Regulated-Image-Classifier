@@ -211,7 +211,7 @@ def model():
             dense = int(request.form.get('dense'))
 
         if request.form.get('dropout') == '':
-            dropout = 0.30
+            dropout = 0.3
         else:
             dropout = int(request.form.get('dropout'))
             dropout = dropout/100
