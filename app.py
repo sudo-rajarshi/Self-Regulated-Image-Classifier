@@ -79,7 +79,7 @@ def split():
         print(val_size)
 
         if request.form.get('test_size') == '':
-            test_size = 0.10
+            test_size = 0.1
         else:
             test_size = float(request.form.get('test_size'))
             test_size = test_size/100
